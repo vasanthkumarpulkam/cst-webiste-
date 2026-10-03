@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Book Appointment</title>
+<title>Book an Appointment | CST Automotive</title>
+<meta name="description" content="Book an appointment at CST Automotive in Dallas, TX. Oil changes take 30 minutes. Pick a day and time online.">
+<meta name="theme-color" content="#0F2C40">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2710%27 fill=%27%230F2C40%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Arial Black,Arial%27 font-size=%2726%27 font-weight=%27900%27 text-anchor=%27middle%27 fill=%27%23F2B705%27%3ECST%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: sticky shop bar, then a deep oil-blue hero split in two —
@@ -344,6 +347,7 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
 .toast .x{border:0;font-size:22px;padding:6px 8px;letter-spacing:0}
 .toast[hidden]{display:none}
 @media (max-width:820px){.has-dock .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 </style>
 </head><body>
 <header class="bar bar-compact">
@@ -358,16 +362,25 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
         <div>
           <p class="kicker">Appointments</p>
           <h1 class="book-h">Book your visit</h1>
-          <p>Walk-ins are always welcome. To hold a time, pick a day and time, tell us about the car, and send the request. The shop confirms every appointment by phone.</p>
+          <p>Walk-ins are always welcome. Pick a service, a day and a time, tell us about the car, and your appointment is booked right away. Oil changes take 30 minutes; other jobs hold a one-hour slot.</p>
         </div>
         <a class="btn btn-ghost" href="tel:+12142566347">Or call (214) 256-6347</a>
       </div>
 
+      <p class="err" id="down" role="alert" hidden>Online booking is temporarily unavailable. Please call <a href="tel:+12142566347">(214) 256-6347</a> or just walk in.</p>
       <form class="sched" id="sched" novalidate>
         <div class="sched-grid">
           <div class="sched-col">
             <fieldset>
-              <legend><span class="num">1</span>Pick a day</legend>
+              <legend><span class="num">1</span>Pick a service and a day</legend>
+              <div class="f"><label for="b-service">What do you need?</label>
+                <select id="b-service" required>
+                  <option value="">Choose a service</option>
+                  <option>Brake service</option><option>Computer diagnostics</option><option>Electrical</option>
+                  <option>Oil change</option><option>Transmission</option><option>A/C and heating</option>
+                  <option>Tires and alignment</option><option>Inspection</option><option>Fleet maintenance</option>
+                  <option>Not sure, need it looked at</option>
+                </select></div>
               <div class="cal-head">
                 <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">←</button>
                 <b id="cal-title" aria-live="polite"></b>
@@ -387,15 +400,8 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
           <div class="sched-col">
             <div class="holder" id="holder"><b>Your details open here.</b><span>Pick a day, then a time.</span></div>
             <fieldset id="step-details" hidden>
+              <div class="hp" aria-hidden="true"><label>Leave this empty<input id="b-website" tabindex="-1" autocomplete="off"></label></div>
               <legend><span class="num">3</span>Your car and contact details</legend>
-              <div class="f"><label for="b-service">Service needed</label>
-                <select id="b-service" required>
-                  <option value="">Choose a service</option>
-                  <option>Brake service</option><option>Computer diagnostics</option><option>Electrical</option>
-                  <option>Oil change</option><option>Transmission</option><option>A/C and heating</option>
-                  <option>Tires and alignment</option><option>Inspection</option><option>Fleet maintenance</option>
-                  <option>Not sure, need it looked at</option>
-                </select></div>
               <div class="f3">
                 <div class="f"><label for="b-year">Year</label><input id="b-year" inputmode="numeric" maxlength="4" placeholder="2018" required></div>
                 <div class="f"><label for="b-make">Make</label><input id="b-make" placeholder="Honda" required></div>
@@ -413,27 +419,21 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
             <p class="pick" id="pick">No time selected yet.</p>
             <p class="err" id="err" role="alert" hidden></p>
             <button class="btn btn-signal" type="submit">Book now</button>
-            <p class="hint">The shop calls to confirm every appointment.</p></div>
+            <p class="hint">You will see your confirmation right away. To change a booking, call (214) 256-6347.</p></div>
           </div>
         </div>
       </form>
 
       <div class="sched done" id="done" hidden tabindex="-1">
-        <p class="kicker">Request ready</p>
+        <p class="kicker">You are booked</p>
         <h3 class="done-h" id="done-h"></h3>
-        <p class="done-p">One more step: send these details to the shop so they can confirm your time. Tap Email, or copy the details and text or call them in.</p>
+        <p class="done-p">Reference <b id="done-ref"></b>. <span id="done-note"></span> Walk-ins are always welcome, and the shop is at 2557 Glenda Ln #1&amp;2, Dallas.</p>
         <pre class="done-pre" id="done-text"></pre>
         <div class="cta">
-          <a class="btn btn-signal" id="done-mail" href="#">Email to the shop</a>
           <button class="btn btn-line" type="button" id="done-copy">Copy details</button>
           <a class="btn btn-line" href="tel:+12142566347">Call (214) 256-6347</a>
-          <button class="btn btn-line" type="button" id="done-again">Book another</button>
+          <button class="btn btn-signal" type="button" id="done-again">Book another</button>
         </div>
-      </div>
-
-      <div class="mine" id="mine" hidden>
-        <h3>Your requests on this device</h3>
-        <ul id="mine-list"></ul>
       </div>
     </div>
   </section>
@@ -449,40 +449,54 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
 <script>document.getElementById("yr").textContent=new Date().getFullYear();</script>
 <script>
 (function(){
-  var KEY="cst-requests", EMAIL="cstautomotive@yahoo.com", HOURS=[9,10,11,12,13,14,15,16], LAST=16;
+  var API="https://frxzhjmvoqyjzgdcupkg.supabase.co";
+  // Public (anon) key: safe to ship in the page. It can only call get_busy and the booking function.
+  var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyeHpoam12b3F5anpnZGN1cGtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMDY5NTYsImV4cCI6MjEwNjU4Mjk1Nn0.J7eB9te8Jk1wATPw9ARjOnRMW5cZCPFnrLJE7Oterkk";
+  var OPEN=9*60, CLOSE=17*60, OIL="Oil change";
   var $=function(id){return document.getElementById(id)};
   var pad=function(n){return (n<10?"0":"")+n};
   var key=function(y,m,d){return y+"-"+pad(m+1)+"-"+pad(d)};
+  var headers={apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json"};
 
   // "Now" in the shop's time zone, so a customer anywhere sees the shop's calendar.
   function shopNow(){
     var p={};
-    try{new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",year:"numeric",month:"numeric",day:"numeric",hour:"numeric",hour12:false})
+    try{new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",year:"numeric",month:"numeric",day:"numeric",hour:"numeric",minute:"numeric",hour12:false})
       .formatToParts(new Date()).forEach(function(x){p[x.type]=x.value})}catch(e){}
-    if(!p.year){var n=new Date();return {y:n.getFullYear(),m:n.getMonth(),d:n.getDate(),h:n.getHours()}}
-    return {y:+p.year,m:+p.month-1,d:+p.day,h:+p.hour%24};
+    if(!p.year){var n=new Date();return {y:n.getFullYear(),m:n.getMonth(),d:n.getDate(),min:n.getHours()*60+n.getMinutes()}}
+    return {y:+p.year,m:+p.month-1,d:+p.day,min:(+p.hour%24)*60+ +p.minute};
   }
   var now=shopNow(), todayKey=key(now.y,now.m,now.d);
   var maxDate=new Date(Date.UTC(now.y,now.m,now.d+60));
   var maxKey=key(maxDate.getUTCFullYear(),maxDate.getUTCMonth(),maxDate.getUTCDate());
 
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}}
-  function save(list){try{localStorage.setItem(KEY,JSON.stringify(list))}catch(e){}}
-  var saved=load().filter(function(r){return r.date>=todayKey});
+  var busy={}, ready=false, sel=null, selMin=null, view={y:now.y,m:now.m};
+  var dur=function(){var s=$("b-service").value;return s===OIL?30:60};
 
+  function loadBusy(){
+    return fetch(API+"/rest/v1/rpc/get_busy",{method:"POST",headers:headers,body:JSON.stringify({p_from:todayKey,p_to:maxKey})})
+      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+      .then(function(rows){
+        busy={};rows.forEach(function(x){(busy[x.day]=busy[x.day]||[]).push([x.start_min,x.end_min])});
+        ready=true;$("down").hidden=true;
+      })
+      .catch(function(){ready=false;$("down").hidden=false});
+  }
+
+  function slotOpen(k,start,d){
+    if(k===todayKey&&start<=now.min)return false;
+    if(start<OPEN||start+d>CLOSE)return false;
+    return !(busy[k]||[]).some(function(b){return b[0]<start+d&&b[1]>start});
+  }
+  function starts(d){var a=[];for(var m=OPEN;m+d<=CLOSE;m+=d)a.push(m);return a}
   function dayOpen(k){
     var dow=new Date(k+"T12:00:00Z").getUTCDay();
-    if(dow===0||dow===6||k<todayKey||k>maxKey)return false;
-    return !(k===todayKey&&now.h>=LAST);
-  }
-  function slotOpen(k,h){
-    if(k===todayKey&&h<=now.h)return false;
-    return !saved.some(function(r){return r.date===k&&r.hour===h});
+    if(!ready||dow===0||dow===6||k<todayKey||k>maxKey)return false;
+    var d=dur();return starts(d).some(function(m){return slotOpen(k,m,d)});
   }
   function longDate(k){return new Date(k+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric",timeZone:"UTC"})}
-  function hourLabel(h){return (h>12?h-12:h)+":00 "+(h>=12?"PM":"AM")}
-
-  var sel=null, selHour=null, view={y:now.y,m:now.m};
+  function label(m){var h=Math.floor(m/60),n=m%60;return (h>12?h-12:h)+":"+pad(n)+" "+(h>=12?"PM":"AM")}
+  function hhmm(m){return pad(Math.floor(m/60))+":"+pad(m%60)}
 
   function renderCal(){
     var cal=$("cal");cal.textContent="";
@@ -504,30 +518,21 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
   function renderSlots(){
     if(!sel)return;
     var box=$("slots");box.textContent="";
-    $("slot-day").textContent=longDate(sel);
-    HOURS.forEach(function(h){
+    var svc=$("b-service").value, d=dur();
+    $("slot-day").textContent=longDate(sel)+(svc===OIL?" · oil change, about 30 minutes":svc?" · about 1 hour":"");
+    if(!svc){$("pick").textContent="Choose a service first.";$("slot-day").textContent=longDate(sel)+" · choose a service above to see times";return}
+    starts(d).forEach(function(m){
       var btn=document.createElement("button");
-      btn.type="button";btn.textContent=hourLabel(h);btn.dataset.h=h;
-      btn.setAttribute("aria-pressed",h===selHour?"true":"false");
-      if(!slotOpen(sel,h)){btn.disabled=true;btn.setAttribute("aria-label",hourLabel(h)+", not available")}
+      btn.type="button";btn.textContent=label(m);btn.dataset.m=m;
+      btn.setAttribute("aria-pressed",m===selMin?"true":"false");
+      if(!slotOpen(sel,m,d)){btn.disabled=true;btn.setAttribute("aria-label",label(m)+", not available")}
       box.appendChild(btn);
     });
     if(!box.querySelector("button:not([disabled])"))$("slot-day").textContent=longDate(sel)+" · no times left, please pick another day";
-    $("pick").textContent=selHour===null?"No time selected yet.":longDate(sel)+" at "+hourLabel(selHour);
-  }
-  function renderMine(){
-    var ul=$("mine-list");ul.textContent="";
-    saved.sort(function(a,b){return (a.date+pad(a.hour)).localeCompare(b.date+pad(b.hour))});
-    saved.forEach(function(r){
-      var li=document.createElement("li"), s=document.createElement("span"), x=document.createElement("button");
-      s.textContent=longDate(r.date)+" · "+hourLabel(r.hour)+" · "+r.service+" · "+r.year+" "+r.make+" "+r.model;
-      x.type="button";x.textContent="Remove";x.dataset.ref=r.ref;
-      li.appendChild(s);li.appendChild(x);ul.appendChild(li);
-    });
-    $("mine").hidden=!saved.length;
+    $("pick").textContent=selMin===null?"No time selected yet.":longDate(sel)+" at "+label(selMin);
   }
 
-  // Steps open one at a time: day, then time, then details.
+  // Steps open one at a time: service and day, then time, then details.
   function reveal(el){
     var was=el.hidden; el.hidden=false;
     if(was){el.classList.remove("in");void el.offsetWidth;el.classList.add("in")}
@@ -545,36 +550,44 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
   }
   $("cal").addEventListener("click",function(e){
     var k=e.target.dataset&&e.target.dataset.k;if(!k||e.target.disabled)return;
-    sel=k;selHour=null;renderCal();renderSlots();showTime();
+    sel=k;selMin=null;renderCal();renderSlots();showTime();
   });
   $("slots").addEventListener("click",function(e){
-    var h=e.target.dataset&&e.target.dataset.h;if(!h||e.target.disabled)return;
-    selHour=+h;renderSlots();showDetails();
+    var m=e.target.dataset&&e.target.dataset.m;if(!m||e.target.disabled)return;
+    selMin=+m;renderSlots();showDetails();
+  });
+  // Changing the service changes the slot length, so the chosen time no longer applies.
+  $("b-service").addEventListener("change",function(){
+    selMin=null;renderCal();
+    if(sel){renderSlots();showTime()}
   });
   $("cal-prev").addEventListener("click",function(){view.m--;if(view.m<0){view.m=11;view.y--}renderCal()});
   $("cal-next").addEventListener("click",function(){view.m++;if(view.m>11){view.m=0;view.y++}renderCal()});
-  $("mine-list").addEventListener("click",function(e){
-    var ref=e.target.dataset&&e.target.dataset.ref;if(!ref)return;
-    saved=saved.filter(function(r){return r.ref!==ref});save(saved);renderMine();renderSlots();
-  });
 
-  function summary(r){
-    return ["Appointment request "+r.ref,"",
-      "When:    "+longDate(r.date)+" at "+hourLabel(r.hour),
+  function summary(r,v){
+    return ["Appointment "+r.ref,"",
+      "When:    "+r.when,
       "Service: "+r.service,
-      "Vehicle: "+r.year+" "+r.make+" "+r.model,
-      "Name:    "+r.name,
-      "Phone:   "+r.phone]
-      .concat(r.email?["Email:   "+r.email]:[])
-      .concat(r.notes?["Notes:   "+r.notes]:[]).join("\n");
+      "Vehicle: "+r.vehicle,
+      "Name:    "+v.name,
+      "Phone:   "+v.phone]
+      .concat(v.email?["Email:   "+v.email]:[])
+      .concat(v.notes?["Notes:   "+v.notes]:[]).join("\n");
+  }
+
+  var busyBtn=null;
+  function setBusy(on){
+    var b=$("sched").querySelector("button[type=submit]");busyBtn=b;
+    b.disabled=on;b.textContent=on?"Booking…":"Book now";
   }
 
   $("sched").addEventListener("submit",function(e){
     e.preventDefault();
     var v=function(id){return $(id).value.trim()}, bad=[], maxYear=now.y+1;
     var check=function(id,ok,msg){$(id).setAttribute("aria-invalid",ok?"false":"true");if(!ok)bad.push(msg)};
-    if(selHour===null||!slotOpen(sel,selHour))bad.push("pick a time");
+    var d=dur();
     check("b-service",!!v("b-service"),"choose a service");
+    if(selMin===null||!sel||!slotOpen(sel,selMin,d))bad.push("pick a time");
     check("b-year",/^\d{4}$/.test(v("b-year"))&&+v("b-year")>=1950&&+v("b-year")<=maxYear,"enter the vehicle year (1950 to "+maxYear+")");
     check("b-make",!!v("b-make"),"enter the make");
     check("b-model",!!v("b-model"),"enter the model");
@@ -582,21 +595,37 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
     check("b-phone",v("b-phone").replace(/\D/g,"").length>=10,"enter a 10-digit phone number");
     check("b-email",!v("b-email")||/^\S+@\S+\.\S+$/.test(v("b-email")),"fix the email address or leave it blank");
     var err=$("err");
-    if(bad.length){err.textContent="Before sending, please "+bad.join(", ")+".";err.hidden=false;return}
+    if(bad.length){err.textContent="Before booking, please "+bad.join(", ")+".";err.hidden=false;return}
     err.hidden=true;
 
-    var r={ref:"CST-"+sel.slice(5).replace("-","")+"-"+pad(selHour)+Math.random().toString(36).slice(2,5).toUpperCase(),
-      date:sel,hour:selHour,service:v("b-service"),year:v("b-year"),make:v("b-make"),model:v("b-model"),
-      name:v("b-name"),phone:v("b-phone"),email:v("b-email"),notes:v("b-notes")};
-    saved.push(r);save(saved);
-
-    var text=summary(r);
-    $("done-h").textContent=longDate(r.date)+" at "+hourLabel(r.hour);
-    $("done-text").textContent=text;
-    $("done-mail").href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Appointment request "+r.ref+" - "+r.year+" "+r.make+" "+r.model)+"&body="+encodeURIComponent(text);
-    $("sched").hidden=true;$("done").hidden=false;$("done").focus();
-    $("done").scrollIntoView({block:"start",behavior:"smooth"});
-    selHour=null;renderMine();renderSlots();
+    var vals={name:v("b-name"),phone:v("b-phone"),email:v("b-email"),notes:v("b-notes")};
+    setBusy(true);
+    fetch(API+"/functions/v1/book",{method:"POST",headers:headers,body:JSON.stringify({
+      service:v("b-service"),date:sel,time:hhmm(selMin),name:vals.name,phone:vals.phone,email:vals.email,
+      year:v("b-year"),make:v("b-make"),model:v("b-model"),notes:vals.notes,website:v("b-website")})})
+    .then(function(res){return res.json().catch(function(){return {}}).then(function(j){return {status:res.status,body:j}})})
+    .then(function(o){
+      setBusy(false);
+      if(o.status===200&&o.body.ok){
+        var r=o.body;
+        $("done-h").textContent=r.when;
+        $("done-ref").textContent=r.ref;
+        $("done-text").textContent=summary(r,vals);
+        $("done-note").textContent=r.customerEmailSent?"We emailed a confirmation to "+vals.email+".":
+          r.customerSmsSent?"We texted a confirmation to "+vals.phone+".":
+          "Please save your reference number. Need to change the time? Call the shop.";
+        $("sched").hidden=true;$("done").hidden=false;$("done").focus();
+        $("done").scrollIntoView({block:"start",behavior:"smooth"});
+        selMin=null;loadBusy();
+        return;
+      }
+      err.textContent=o.body.error||"Something went wrong. Please call the shop at (214) 256-6347.";err.hidden=false;
+      if(o.status===409){selMin=null;loadBusy().then(function(){renderCal();renderSlots();showTime()})}
+    })
+    .catch(function(){
+      setBusy(false);
+      err.textContent="We could not reach the booking system. Please check your connection or call (214) 256-6347.";err.hidden=false;
+    });
   });
 
   $("done-copy").addEventListener("click",function(){
@@ -606,11 +635,12 @@ h2{font:italic 800 clamp(38px,6vw,68px)/.95 var(--display);text-transform:upperc
     else fallback();
   });
   $("done-again").addEventListener("click",function(){
-    $("sched").reset();sel=null;selHour=null;$("step-time").hidden=true;$("step-details").hidden=true;$("step-send").hidden=true;$("holder").hidden=false;$("done").hidden=true;$("sched").hidden=false;renderCal();
+    $("sched").reset();sel=null;selMin=null;$("step-time").hidden=true;$("step-details").hidden=true;$("step-send").hidden=true;$("holder").hidden=false;$("done").hidden=true;$("sched").hidden=false;renderCal();
     $("sched").scrollIntoView({block:"start",behavior:"smooth"});
   });
 
-  renderCal();renderSlots();renderMine();
+  renderCal();
+  loadBusy().then(renderCal);
 })();
 </script>
 
