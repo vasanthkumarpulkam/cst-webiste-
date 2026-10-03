@@ -53,7 +53,7 @@ Deliverable is two pages:
 
 **Services list (from a directory listing, owner has not confirmed):** brake service; computerized diagnostics; electrical (battery, alternator, starter); oil changes (standard and synthetic); transmission (fluid service and repair); A/C and heating; tires and alignment (sales, mounting, rotation, balancing, alignment); state safety inspections and emissions; fleet maintenance with priority scheduling.
 
-**Makes shown (from the same directory):** Acura, Audi, BMW, Genesis, Honda, Infiniti, Mazda, Mercedes-Benz, Nissan, Porsche, Volvo, Chevrolet, GMC, Lincoln. The user wants the site to say the shop services **all makes and models**, with imports a specialty. Google reviews mention BMW, Mercedes, Bentley, Ferrari and a Mustang.
+**Update (later session): the "What we work on" section now shows about 40 makes in four scrolling groups (Domestic, Asian imports, European imports, Luxury & exotic) with filter tabs, and the open/closed status is live (green open, amber in the last hour, red closed) driven by a `HOURS` table in `index.html`. The exotic group is based on Google review mentions (Bentley, Ferrari) and is unconfirmed with the owner. The original 14-make list from the directory was:** Acura, Audi, BMW, Genesis, Honda, Infiniti, Mazda, Mercedes-Benz, Nissan, Porsche, Volvo, Chevrolet, GMC, Lincoln. The user wants the site to say the shop services **all makes and models**, with imports a specialty. Google reviews mention BMW, Mercedes, Bentley, Ferrari and a Mustang.
 
 ---
 
