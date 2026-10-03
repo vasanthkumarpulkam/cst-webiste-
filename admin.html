@@ -226,7 +226,7 @@ details.card summary{cursor:pointer;font-family:var(--display);font-size:20px;te
       <div class="row">
         <div><label for="bd">Day</label><input id="bd" type="date"></div>
         <div><label for="bf">From</label><input id="bf" type="time" value="09:00" step="1800"></div>
-        <div><label for="bt">To</label><input id="bt" type="time" value="17:00" step="1800"></div>
+        <div><label for="bt">To</label><input id="bt" type="time" value="18:00" step="1800"></div>
         <div><label for="br">Reason (private)</label><input id="br" maxlength="200" placeholder="Lunch, parts delivery, closed"></div>
         <button class="primary" id="addb">Block time</button>
       </div>
@@ -247,7 +247,7 @@ details.card summary{cursor:pointer;font-family:var(--display);font-size:20px;te
     <div class="dlg-b">
       <div class="grid2">
         <div class="f"><label for="n-service">Service</label>
-          <select id="n-service"><option>Oil change</option><option>Brake service</option><option>Computer diagnostics</option><option>Electrical</option><option>Transmission</option><option>A/C and heating</option><option>Tires and alignment</option><option>Inspection</option><option>Fleet maintenance</option><option>Not sure, need it looked at</option></select></div>
+          <select id="n-service"><option>Oil change</option><option>Brake service</option><option>Computer diagnostics</option><option>Electrical</option><option>Transmission</option><option>A/C and heating</option><option>Tires and alignment</option><option>Fleet maintenance</option><option>Not sure, need it looked at</option></select></div>
         <div class="f"><label for="n-source">Came in by</label><select id="n-source"><option value="phone">Phone call</option><option value="walk-in">Walk-in</option></select></div>
       </div>
       <div class="grid2">
@@ -278,7 +278,7 @@ details.card summary{cursor:pointer;font-family:var(--display);font-size:20px;te
 (function(){
   var API="https://frxzhjmvoqyjzgdcupkg.supabase.co";
   var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyeHpoam12b3F5anpnZGN1cGtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMDY5NTYsImV4cCI6MjEwNjU4Mjk1Nn0.J7eB9te8Jk1wATPw9ARjOnRMW5cZCPFnrLJE7Oterkk";
-  var TZ="America/Chicago", OPEN=540, CLOSE=1020, ROW=44;   // ROW = pixels per 30 minutes
+  var TZ="America/Chicago", OPEN=540, CLOSE=1080, ROW=44;   // ROW = pixels per 30 minutes
   var $=function(id){return document.getElementById(id)};
   var pad=function(n){return (n<10?"0":"")+n};
   var sess=null, appts=[], blocks=[], view="day", day="", timer=null, loaded=false;
@@ -602,7 +602,7 @@ details.card summary{cursor:pointer;font-family:var(--display);font-size:20px;te
   });
 
   // ---------- block time ----------
-  var PRE={day:["00:00","23:59"],am:["09:00","12:00"],pm:["12:00","17:00"],lunch:["12:00","13:00"]};
+  var PRE={day:["00:00","23:59"],am:["09:00","12:00"],pm:["12:00","18:00"],lunch:["12:00","13:00"]};
   document.querySelector(".presets").addEventListener("click",function(e){var p=e.target.dataset&&e.target.dataset.p;if(!p)return;$("bf").value=PRE[p][0];$("bt").value=PRE[p][1]});
   $("addb").addEventListener("click",function(){
     var m=$("bmsg");m.textContent="";

@@ -25,20 +25,19 @@ FACEBOOK = "https://www.facebook.com/cstautomotive/"
 
 TITLE = "Auto Repair in Dallas, TX | CST Automotive"
 DESC = ("CST Automotive is an independent auto repair shop in Northwest Dallas, TX. Brakes, diagnostics, "
-        "oil changes, transmission, A/C, tires and inspections on all makes and models. Book online or walk in.")
+        "oil changes, transmission, A/C, tires and fleet service on all makes and models. Book online or walk in.")
 BOOK_TITLE = "Book an Appointment | CST Automotive, Dallas TX"
 BOOK_DESC = ("Book an auto repair appointment at CST Automotive in Dallas, TX. Oil changes take a 30-minute slot, "
              "other services one hour. Pick a day and time online, Monday to Friday.")
 
 SERVICES = [
-    ("Brake service", "Inspection, pads and rotors, and brake fluid changes."),
+    ("Brake service", "Brake inspection, pads and rotors, and brake fluid changes."),
     ("Computer diagnostics", "Warning lights read and traced to the actual cause before parts are replaced."),
     ("Electrical", "Battery, alternator and starter testing and replacement."),
     ("Oil changes", "Standard and full synthetic."),
     ("Transmission", "Fluid service and transmission repair."),
     ("A/C and heating", "HVAC diagnosis and air conditioning service."),
     ("Tires and alignment", "Sales, mounting, rotation, balancing and wheel alignment."),
-    ("Inspections", "State safety inspections and emissions testing."),
     ("Fleet maintenance", "Maintenance contracts with priority scheduling for business vehicles."),
 ]
 
@@ -47,7 +46,7 @@ FAQ = [
     ("Where is CST Automotive located?",
      "CST Automotive is at 2557 Glenda Ln #1&2, Dallas, TX 75229, in Northwest Dallas. Call (214) 256-6347 for directions."),
     ("When is CST Automotive open?",
-     "Monday to Friday, 9:00 AM to 5:00 PM. The shop is closed on Saturday and Sunday."),
+     "Monday to Friday, 9:00 AM to 6:00 PM. The shop is closed on Saturday and Sunday."),
     ("Do I need an appointment?",
      "No. Walk-ins are always welcome. If you want a time set aside for your car, book online or call (214) 256-6347."),
     ("How do I book an appointment?",
@@ -55,11 +54,9 @@ FAQ = [
     ("How long does an oil change take?",
      "Oil changes are booked as a 30-minute slot. Other services hold a one-hour slot, and longer repairs are scheduled when the car is diagnosed."),
     ("What services does CST Automotive offer?",
-     "Brake service, computer diagnostics, electrical (battery, alternator, starter), oil changes (standard and full synthetic), transmission service and repair, A/C and heating, tires and alignment, state safety inspections and emissions testing, and fleet maintenance."),
+     "Brake service, computer diagnostics, electrical (battery, alternator, starter), oil changes (standard and full synthetic), transmission service and repair, A/C and heating, tires and alignment, and fleet maintenance."),
     ("Which makes and models do you work on?",
      "All makes and models, domestic and import. Imports such as Acura, Audi, BMW, Honda, Mazda, Mercedes-Benz, Nissan, Porsche and Volvo are a specialty."),
-    ("Do you do state inspections?",
-     "Yes. We offer state safety inspections and emissions testing."),
     ("Will I know the price before work starts?",
      "Yes. We find the cause first, then give you the price and what it covers. Nothing is repaired until you approve it."),
     ("Do you service business vehicles?",
@@ -67,7 +64,7 @@ FAQ = [
 ]
 
 HOURS = [{"@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "17:00"}]
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00"}]
 
 
 def jl(obj):
@@ -181,7 +178,7 @@ def write_files():
     faq = "\n\n".join(f"**{q}**\n{a}" for q, a in FAQ)
     (ROOT / "llms.txt").write_text(
         f"# {NAME}\n\n> Independent auto repair shop in Northwest Dallas, Texas. Domestic and import vehicles, all makes and models. Walk-ins are always welcome.\n\n"
-        f"## Facts\n- Address: 2557 Glenda Ln #1&2, Dallas, TX 75229\n- Phone: {PHONE_DISPLAY}\n- Hours: Monday to Friday, 9:00 AM to 5:00 PM (closed Saturday and Sunday)\n"
+        f"## Facts\n- Address: 2557 Glenda Ln #1&2, Dallas, TX 75229\n- Phone: {PHONE_DISPLAY}\n- Hours: Monday to Friday, 9:00 AM to 6:00 PM (closed Saturday and Sunday)\n"
         f"- Booking: {SITE}/booking (oil changes use 30-minute slots, other services one hour)\n- Google Maps: {MAPS}\n- Facebook: {FACEBOOK}\n\n"
         f"## Services\n{svc}\n\n## Pages\n- [Home]({SITE}/): services, makes, hours, FAQ, contact\n- [Book an appointment]({SITE}/booking)\n\n## FAQ\n\n{faq}\n")
 

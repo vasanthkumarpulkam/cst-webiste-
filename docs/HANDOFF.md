@@ -41,7 +41,7 @@ Deliverable is two pages:
 | Address | 2557 Glenda Ln #1&2, Dallas, TX 75229 | Google Maps listing. Yelp says "Ste 1" |
 | Phone | (214) 256-6347 | Google Maps, Manta, user notes. Reliable |
 | Email | cstautomotive@yahoo.com | From a user-supplied note. **Unverified** |
-| Hours | Mon to Fri 9:00 AM to 5:00 PM, Sat and Sun closed | Google Maps and Facebook. **Conflict:** Yelp and Roadtrippers say Saturday 9 AM to 3 PM. Yelp is an unclaimed listing. Ask the owner |
+| Hours | **Owner-confirmed: Mon to Fri 9:00 AM to 6:00 PM**, Sat and Sun closed | Google Maps and Facebook. **Conflict:** Yelp and Roadtrippers say Saturday 9 AM to 3 PM. Yelp is an unclaimed listing. Ask the owner |
 | Walk-ins | Always welcome | **Stated by the user.** Treat as true |
 | Opened | 2019 | Manta only. Google reviews dating back about 6 years fit it. **Unverified** |
 | Google rating | 4.5 out of 5 | Google Maps, seen directly |
@@ -51,7 +51,7 @@ Deliverable is two pages:
 | Facebook | https://www.facebook.com/cstautomotive/ | Search result. Could not be opened (robots.txt) |
 | Yelp | Unclaimed, **no reviews at all** | Seen directly on 2026-10-03 |
 
-**Services list (from a directory listing, owner has not confirmed):** brake service; computerized diagnostics; electrical (battery, alternator, starter); oil changes (standard and synthetic); transmission (fluid service and repair); A/C and heating; tires and alignment (sales, mounting, rotation, balancing, alignment); state safety inspections and emissions; fleet maintenance with priority scheduling.
+**Owner corrections (Oct 2026): hours are 9 AM to 6 PM, and CST does NOT do state safety inspections or emissions testing (removed everywhere). Services list (from a directory listing, otherwise unconfirmed):** brake service; computerized diagnostics; electrical (battery, alternator, starter); oil changes (standard and synthetic); transmission (fluid service and repair); A/C and heating; tires and alignment (sales, mounting, rotation, balancing, alignment); fleet maintenance with priority scheduling.
 
 **Update (later session): the "What we work on" section now shows about 40 makes in four scrolling groups (Domestic, Asian imports, European imports, Luxury & exotic) with filter tabs, and the open/closed status is live (green open, amber in the last hour, red closed) driven by a `HOURS` table in `index.html`. The exotic group is based on Google review mentions (Bentley, Ferrari) and is unconfirmed with the owner. The original 14-make list from the directory was:** Acura, Audi, BMW, Genesis, Honda, Infiniti, Mazda, Mercedes-Benz, Nissan, Porsche, Volvo, Chevrolet, GMC, Lincoln. The user wants the site to say the shop services **all makes and models**, with imports a specialty. Google reviews mention BMW, Mercedes, Bentley, Ferrari and a Mustang.
 
