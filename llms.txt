@@ -1,0 +1,58 @@
+# CST Automotive
+
+> Independent auto repair shop in Northwest Dallas, Texas. Domestic and import vehicles, all makes and models. Walk-ins are always welcome.
+
+## Facts
+- Address: 2557 Glenda Ln #1&2, Dallas, TX 75229
+- Phone: (214) 256-6347
+- Hours: Monday to Friday, 9:00 AM to 5:00 PM (closed Saturday and Sunday)
+- Booking: https://cst-webiste.vercel.app/booking (oil changes use 30-minute slots, other services one hour)
+- Google Maps: https://www.google.com/maps/place/?q=place_id:ChIJodd8VEEnTIYRuZpToNmA-RI
+- Facebook: https://www.facebook.com/cstautomotive/
+
+## Services
+- Brake service: Inspection, pads and rotors, and brake fluid changes.
+- Computer diagnostics: Warning lights read and traced to the actual cause before parts are replaced.
+- Electrical: Battery, alternator and starter testing and replacement.
+- Oil changes: Standard and full synthetic.
+- Transmission: Fluid service and transmission repair.
+- A/C and heating: HVAC diagnosis and air conditioning service.
+- Tires and alignment: Sales, mounting, rotation, balancing and wheel alignment.
+- Inspections: State safety inspections and emissions testing.
+- Fleet maintenance: Maintenance contracts with priority scheduling for business vehicles.
+
+## Pages
+- [Home](https://cst-webiste.vercel.app/): services, makes, hours, FAQ, contact
+- [Book an appointment](https://cst-webiste.vercel.app/booking)
+
+## FAQ
+
+**Where is CST Automotive located?**
+CST Automotive is at 2557 Glenda Ln #1&2, Dallas, TX 75229, in Northwest Dallas. Call (214) 256-6347 for directions.
+
+**When is CST Automotive open?**
+Monday to Friday, 9:00 AM to 5:00 PM. The shop is closed on Saturday and Sunday.
+
+**Do I need an appointment?**
+No. Walk-ins are always welcome. If you want a time set aside for your car, book online or call (214) 256-6347.
+
+**How do I book an appointment?**
+Use the online booking page: pick a service, a day and a time, and enter your car and contact details. You see your confirmation straight away, and if you give an email address we send one there too.
+
+**How long does an oil change take?**
+Oil changes are booked as a 30-minute slot. Other services hold a one-hour slot, and longer repairs are scheduled when the car is diagnosed.
+
+**What services does CST Automotive offer?**
+Brake service, computer diagnostics, electrical (battery, alternator, starter), oil changes (standard and full synthetic), transmission service and repair, A/C and heating, tires and alignment, state safety inspections and emissions testing, and fleet maintenance.
+
+**Which makes and models do you work on?**
+All makes and models, domestic and import. Imports such as Acura, Audi, BMW, Honda, Mazda, Mercedes-Benz, Nissan, Porsche and Volvo are a specialty.
+
+**Do you do state inspections?**
+Yes. We offer state safety inspections and emissions testing.
+
+**Will I know the price before work starts?**
+Yes. We find the cause first, then give you the price and what it covers. Nothing is repaired until you approve it.
+
+**Do you service business vehicles?**
+Yes. Fleet maintenance is available with priority scheduling. Call to talk through what your vehicles need.
