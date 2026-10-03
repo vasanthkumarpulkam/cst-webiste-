@@ -2,161 +2,627 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0F2C40">
 <title>CST Automotive · Shop schedule</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,800&family=Barlow:wght@400;500;600&display=swap">
 <style>
-:root{color-scheme:light dark;--bg:#EEF1F3;--surface:#fff;--ink:#0E1B26;--muted:#51616E;--line:#CBD3D9;--brand:#0F4C75;--signal:#F2B705;--signal-ink:#1A1400;--closed:#A6372B}
-@media (prefers-color-scheme:dark){:root{--bg:#0C141B;--surface:#14202A;--ink:#E9EEF2;--muted:#93A3AF;--line:#26343F;--brand:#6FB6E3;--signal:#F4B81A;--closed:#EF8A7C}}
+:root{color-scheme:light dark;--bg:#EEF1F3;--surface:#fff;--ink:#0E1B26;--muted:#51616E;--line:#CBD3D9;--brand:#0F4C75;--brand-soft:#E3EEF6;--signal:#F2B705;--signal-ink:#1A1400;--signal-soft:#FFF4CC;--closed:#A6372B;--ok:#1E7B4B;--hero:#0F2C40;--soft:#F5F7F8;--shadow:0 10px 30px -12px rgba(15,44,64,.35);
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#0C141B;--surface:#14202A;--ink:#E9EEF2;--muted:#93A3AF;--line:#26343F;--brand:#6FB6E3;--brand-soft:#17303F;--signal:#F4B81A;--signal-soft:#2F2A12;--closed:#EF8A7C;--ok:#5CC58D;--hero:#101D27;--soft:#0F1A23;--shadow:0 10px 30px -12px rgba(0,0,0,.7)}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,32px);background:var(--surface);border-bottom:1px solid var(--line)}
-header b{font-size:18px}
-main{max-width:1000px;margin:0 auto;padding:20px clamp(16px,4vw,32px) 60px}
-h2{font-size:18px;margin:28px 0 10px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:16px}
-label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
-input{font:inherit;color:inherit;background:transparent;border:1px solid var(--line);border-radius:3px;padding:9px 10px;width:100%}
-button{font:inherit;font-weight:600;cursor:pointer;border-radius:3px;padding:9px 14px;border:1px solid var(--line);background:transparent;color:var(--ink)}
-button.primary{background:var(--signal);border-color:var(--signal);color:var(--signal-ink)}
-button.danger{color:var(--closed)}
-.row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:end}
-.login{max-width:380px;margin:60px auto}
-.login .row{grid-template-columns:1fr}
-.msg{color:var(--closed);margin:8px 0 0;min-height:1.2em}
-ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-li{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center}
-li small{display:block;color:var(--muted)}
-.when{font-weight:700}
-.day{margin:18px 0 6px;font-weight:700;color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
-.empty{color:var(--muted)}
-[hidden]{display:none!important}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--body)}
 a{color:var(--brand)}
+[hidden]{display:none!important}
+button{font:inherit;font-weight:600;cursor:pointer;border-radius:5px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);transition:border-color .15s,background-color .15s}
+button:hover{border-color:var(--brand)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+button.primary{background:var(--signal);border-color:var(--signal);color:var(--signal-ink);font-family:var(--display);font-size:16px;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px}
+button.primary:hover{filter:brightness(1.05)}
+button.danger{color:var(--closed)}
+button.small{padding:6px 10px;font-size:13px}
+button:disabled{opacity:.5;cursor:default}
+input,select,textarea{font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:9px 10px;width:100%}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.msg{color:var(--closed);margin:8px 0 0;min-height:1.2em;font-size:14px}
+
+/* header */
+.top{background:var(--hero);color:#F2F6F8;position:sticky;top:0;z-index:20}
+.top-in{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;padding:10px clamp(14px,4vw,32px);max-width:1240px;margin:0 auto}
+.top::after{content:"";display:block;height:5px;background:repeating-linear-gradient(135deg,var(--signal) 0 12px,#14202A 12px 24px)}
+.logo{font-family:var(--display);font-style:italic;font-weight:800;font-size:26px;letter-spacing:.01em;line-height:1}
+.logo span{font-style:normal;font-weight:600;font-size:13px;letter-spacing:.22em;text-transform:uppercase;margin-left:8px;opacity:.85}
+.top .who{font-size:13px;opacity:.8}
+.top a{color:#F2F6F8}
+.top button{background:transparent;border-color:rgba(255,255,255,.35);color:#F2F6F8}
+main{max-width:1240px;margin:0 auto;padding:20px clamp(14px,4vw,32px) 90px}
+
+/* login */
+.login{max-width:400px;margin:9vh auto 0;box-shadow:var(--shadow)}
+.login h1{font-family:var(--display);font-size:30px;margin:0 0 4px;letter-spacing:.02em;text-transform:uppercase}
+.login p{margin:0 0 14px;color:var(--muted)}
+.login .f{margin-bottom:12px}
+
+/* hello + stats */
+.hello{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+.hello h1{margin:0;font-family:var(--display);font-size:34px;line-height:1;text-transform:uppercase;letter-spacing:.01em}
+.hello small{display:block;color:var(--muted);font-size:14px;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:8px;padding:12px 14px}
+.stat:nth-child(2){border-top-color:var(--signal)}
+.stat:nth-child(3){border-top-color:var(--ok)}
+.stat:nth-child(4){border-top-color:var(--muted)}
+.stat b{display:block;font-family:var(--display);font-size:34px;line-height:1.05}
+.stat span{color:var(--muted);font-size:13px}
+
+/* toolbar */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.bar .grow{flex:1;min-width:200px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;border-radius:0;background:transparent}
+.seg button[aria-pressed="true"]{background:var(--brand);color:#fff}
+.datebar{display:flex;gap:6px;align-items:center}
+.datebar input{width:auto}
+.chk{display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:500;margin:0;white-space:nowrap}
+.chk input{width:auto}
+.daytitle{font-family:var(--display);font-size:24px;text-transform:uppercase;margin:0 0 10px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.daytitle small{font-family:var(--body);font-size:14px;color:var(--muted);text-transform:none}
+
+/* day timeline */
+.tl{display:grid;grid-template-columns:62px 1fr;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tl-ruler{position:relative;border-right:1px solid var(--line);background:var(--soft)}
+.tl-ruler span{position:absolute;right:8px;transform:translateY(-50%);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tl-body{position:relative}
+.tl-line{position:absolute;left:0;right:0;border-top:1px solid var(--line);pointer-events:none}
+.tl-line.half{border-top-style:dashed;opacity:.55}
+.tl-slot{position:absolute;left:0;right:0;background:transparent;border:0;border-radius:0;padding:0 0 0 12px;text-align:left;color:transparent;font-size:13px;font-weight:600}
+.tl-slot:hover{background:var(--brand-soft);color:var(--brand)}
+.tl-now{position:absolute;left:0;right:0;border-top:2px solid var(--closed);z-index:4;pointer-events:none}
+.tl-now::before{content:"";position:absolute;left:-1px;top:-6px;width:10px;height:10px;border-radius:50%;background:var(--closed)}
+.tl-item{position:absolute;left:8px;right:8px;z-index:2;border-radius:6px;border:1px solid var(--brand);border-left-width:5px;background:var(--brand-soft);padding:4px 10px;overflow:hidden;cursor:pointer;text-align:left;display:block;width:auto;color:var(--ink);font-weight:500}
+.tl-item:hover{box-shadow:var(--shadow)}
+.tl-item.oil{border-color:var(--signal);background:var(--signal-soft)}
+.tl-item.cancelled{opacity:.55;border-style:dashed;border-color:var(--closed);background:transparent}
+.tl-item.block{border-color:var(--muted);background:repeating-linear-gradient(135deg,var(--soft) 0 10px,transparent 10px 20px);cursor:default;z-index:1}
+.tl-item b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-item>span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-item b .tag{display:inline-block;margin-left:8px}
+.tl-item.short{display:flex;align-items:center;gap:10px;padding-top:0;padding-bottom:0}
+.tl-item.short b{flex:none;max-width:45%}
+.tl-item.short>span{flex:1;min-width:0}
+.tl-item .t{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.tl-item .x{position:absolute;right:6px;top:4px;width:auto;padding:2px 8px;font-size:12px;z-index:3}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:1px 6px;border-radius:3px;background:var(--soft);border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:middle}
+.tag.x{color:var(--closed);border-color:var(--closed)}
+.tag.ph{color:var(--brand);border-color:var(--brand)}
+.empty{color:var(--muted);padding:22px;text-align:center;border:1px dashed var(--line);border-radius:8px;background:var(--surface)}
+
+/* week */
+.week{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.wd{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;min-height:240px}
+.wd.today{border-color:var(--signal);box-shadow:0 0 0 2px var(--signal)}
+.wd-h{background:var(--soft);border:0;border-bottom:1px solid var(--line);border-radius:0;text-align:left;padding:10px 12px;display:block;width:100%}
+.wd-h b{font-family:var(--display);font-size:20px;text-transform:uppercase;display:block;line-height:1.1}
+.wd-h span{font-size:12.5px;color:var(--muted)}
+.meter{height:5px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--brand)}
+.wd-b{padding:8px;display:grid;gap:6px;align-content:start;flex:1}
+.chip{display:block;width:100%;text-align:left;padding:6px 8px;border-radius:5px;border:1px solid var(--brand);border-left-width:4px;background:var(--brand-soft);font-weight:500;font-size:13px;line-height:1.3}
+.chip.oil{border-color:var(--signal);background:var(--signal-soft)}
+.chip.cancelled{opacity:.55;border-style:dashed}
+.chip.block{border-color:var(--muted);background:var(--soft);cursor:default}
+.chip b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip span{color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wd-b .none{color:var(--muted);font-size:13px;padding:6px 2px}
+
+/* list */
+.list{display:grid;gap:8px}
+.day{margin:18px 0 6px;font-weight:700;color:var(--muted);font-size:13px;letter-spacing:.07em;text-transform:uppercase}
+.item{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--brand);border-radius:8px;padding:12px 14px;display:grid;grid-template-columns:92px 1fr auto;gap:6px 14px;align-items:center;cursor:pointer;text-align:left;width:100%;font-weight:500}
+.item.oil{border-left-color:var(--signal)}
+.item.cancelled{opacity:.6;border-left-color:var(--closed)}
+.item .t{font-weight:700;font-variant-numeric:tabular-nums}
+.item .t small{display:block;font-weight:500;color:var(--muted)}
+.item .main b{font-size:16px}
+.item .main small{display:block;color:var(--muted)}
+
+/* dialogs */
+dialog{border:0;border-radius:10px;padding:0;width:min(560px,94vw);max-height:92vh;background:var(--surface);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(8,16,24,.6)}
+.dlg-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--soft)}
+.dlg-h h2{margin:0;font-family:var(--display);font-size:26px;text-transform:uppercase;line-height:1.05}
+.dlg-b{padding:16px 18px;overflow:auto;max-height:68vh}
+.dlg-f{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;border-top:1px solid var(--line);background:var(--soft);justify-content:flex-end}
+.kv{display:grid;grid-template-columns:96px 1fr;gap:8px 12px;margin:0}
+.kv dt{color:var(--muted);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding-top:2px}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.hist{margin:14px 0 0;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--soft);font-size:14px}
+.hist b{display:block;margin-bottom:4px}
+.hist div{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:90px 1fr 1fr;gap:12px}
+.f{margin-bottom:12px}
+.btnlink{display:inline-block;text-decoration:none;font-weight:600;border:1px solid var(--line);border-radius:5px;padding:9px 14px;background:var(--surface);color:var(--ink)}
+.btnlink:hover{border-color:var(--brand)}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+details.card summary{cursor:pointer;font-family:var(--display);font-size:20px;text-transform:uppercase;letter-spacing:.03em}
+.row{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));align-items:end;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--hero);color:#fff;padding:11px 18px;border-radius:7px;font-size:14px;z-index:60;max-width:92vw;box-shadow:var(--shadow)}
+.banner{background:var(--signal-soft);border:1px solid var(--signal);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:14px}
+#sheet{display:none}
+
+@media (max-width:900px){.week{grid-template-columns:1fr}.wd{min-height:0}}
+@media (max-width:640px){.item{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}.kv{grid-template-columns:80px 1fr}.hello h1{font-size:28px}.tl{grid-template-columns:52px 1fr}}
+@media print{
+  body{background:#fff;color:#000}
+  body>*:not(#sheet){display:none!important}
+  #sheet{display:block!important;font:13px/1.35 Arial,sans-serif}
+  #sheet h1{font-size:20px;margin:0 0 2px}
+  #sheet p{margin:0 0 10px;color:#444}
+  #sheet table{width:100%;border-collapse:collapse}
+  #sheet th,#sheet td{border:1px solid #999;padding:6px 8px;text-align:left;vertical-align:top}
+  #sheet th{background:#eee}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+
 <div id="login" class="card login" hidden>
-  <h1 style="font-size:20px;margin:0 0 12px">Shop schedule sign in</h1>
-  <div class="row">
-    <div><label for="em">Email</label><input id="em" type="email" autocomplete="username"></div>
-    <div><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"></div>
-    <button class="primary" id="go">Sign in</button>
-  </div>
+  <h1>Shop schedule</h1>
+  <p>CST Automotive · staff sign in</p>
+  <div class="f"><label for="em">Email</label><input id="em" type="email" autocomplete="username"></div>
+  <div class="f"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password"></div>
+  <button class="primary" id="go" style="width:100%">Sign in</button>
   <p class="msg" id="lmsg" role="alert"></p>
 </div>
 
 <div id="app" hidden>
-  <header><b>CST Automotive · Schedule</b><span><a href="booking.html">Booking page</a> · <button id="out">Sign out</button></span></header>
+  <div class="top"><div class="top-in">
+    <div class="logo">CST<span>Schedule</span></div>
+    <div><span class="who" id="who"></span> &nbsp; <a href="booking" target="_blank" rel="noopener">Public booking page</a> &nbsp; <button class="small" id="out">Sign out</button></div>
+  </div></div>
+
   <main>
-    <h2>Block off time</h2>
-    <div class="card">
+    <div class="hello">
+      <div><h1 id="hi">Today</h1><small id="sub"></small></div>
+      <button class="primary" id="new">+ New booking</button>
+    </div>
+    <div class="banner" id="banner" hidden></div>
+    <div class="stats" id="stats"></div>
+
+    <div class="bar">
+      <div class="seg" role="group" aria-label="View">
+        <button id="v-day" aria-pressed="true">Day</button>
+        <button id="v-week" aria-pressed="false">Week</button>
+        <button id="v-up" aria-pressed="false">Upcoming</button>
+        <button id="v-past" aria-pressed="false">History</button>
+      </div>
+      <div class="datebar" id="datebar">
+        <button class="small" id="d-prev" aria-label="Previous">←</button>
+        <input id="d-pick" type="date" aria-label="Day">
+        <button class="small" id="d-next" aria-label="Next">→</button>
+        <button class="small" id="d-today">Today</button>
+      </div>
+      <div class="grow"><input id="q" type="search" placeholder="Search name, phone, car, service or reference" aria-label="Search"></div>
+      <label class="chk"><input id="show-x" type="checkbox"> Show cancelled</label>
+      <button class="small" id="print">Print day sheet</button>
+    </div>
+
+    <div id="list"></div>
+
+    <details class="card" style="margin-top:24px" id="blockbox">
+      <summary>Block off time</summary>
+      <p style="margin:6px 0 0;color:var(--muted);font-size:14px">Closes the time on the public booking page: lunch, a day off, a parts delivery. Appointments already in it are not cancelled.</p>
+      <div class="presets">
+        <button class="small" data-p="day">Whole day</button>
+        <button class="small" data-p="am">Morning</button>
+        <button class="small" data-p="pm">Afternoon</button>
+        <button class="small" data-p="lunch">Lunch 12 to 1</button>
+      </div>
       <div class="row">
         <div><label for="bd">Day</label><input id="bd" type="date"></div>
         <div><label for="bf">From</label><input id="bf" type="time" value="09:00" step="1800"></div>
         <div><label for="bt">To</label><input id="bt" type="time" value="17:00" step="1800"></div>
         <div><label for="br">Reason (private)</label><input id="br" maxlength="200" placeholder="Lunch, parts delivery, closed"></div>
-        <button class="primary" id="addb">Block this time</button>
+        <button class="primary" id="addb">Block time</button>
       </div>
       <p class="msg" id="bmsg" role="alert"></p>
-    </div>
-    <div id="blocks" style="margin-top:12px"></div>
-
-    <h2>Upcoming appointments</h2>
-    <div id="appts"></div>
+    </details>
   </main>
 </div>
+
+<dialog id="dlg-view" aria-labelledby="v-name">
+  <div class="dlg-h"><div><h2 id="v-name"></h2><div id="v-tags"></div></div><button class="small" id="v-close" aria-label="Close">✕</button></div>
+  <div class="dlg-b"><dl class="kv" id="v-kv"></dl><div class="hist" id="v-hist" hidden></div></div>
+  <div class="dlg-f" id="v-acts"></div>
+</dialog>
+
+<dialog id="dlg-new" aria-labelledby="n-title">
+  <form id="n-form" novalidate>
+    <div class="dlg-h"><div><h2 id="n-title">New booking</h2><small style="color:var(--muted)">Phone calls and walk-ins. The time closes on the public page right away.</small></div><button type="button" class="small" id="n-close" aria-label="Close">✕</button></div>
+    <div class="dlg-b">
+      <div class="grid2">
+        <div class="f"><label for="n-service">Service</label>
+          <select id="n-service"><option>Oil change</option><option>Brake service</option><option>Computer diagnostics</option><option>Electrical</option><option>Transmission</option><option>A/C and heating</option><option>Tires and alignment</option><option>Inspection</option><option>Fleet maintenance</option><option>Not sure, need it looked at</option></select></div>
+        <div class="f"><label for="n-source">Came in by</label><select id="n-source"><option value="phone">Phone call</option><option value="walk-in">Walk-in</option></select></div>
+      </div>
+      <div class="grid2">
+        <div class="f"><label for="n-date">Day</label><input id="n-date" type="date"></div>
+        <div class="f"><label for="n-time">Time</label><select id="n-time"></select></div>
+      </div>
+      <div class="f"><label for="n-name">Customer name</label><input id="n-name" autocomplete="off"></div>
+      <div class="grid2">
+        <div class="f"><label for="n-phone">Phone</label><input id="n-phone" type="tel" autocomplete="off" placeholder="(214) 555-0123"></div>
+        <div class="f"><label for="n-email">Email (optional)</label><input id="n-email" type="email" autocomplete="off"></div>
+      </div>
+      <div class="grid3">
+        <div class="f"><label for="n-year">Year</label><input id="n-year" inputmode="numeric" maxlength="4" placeholder="2018"></div>
+        <div class="f"><label for="n-make">Make</label><input id="n-make" placeholder="Honda"></div>
+        <div class="f"><label for="n-model">Model</label><input id="n-model" placeholder="Accord"></div>
+      </div>
+      <div class="f"><label for="n-notes">Notes (optional)</label><textarea id="n-notes" rows="2"></textarea></div>
+      <p class="msg" id="n-msg" role="alert"></p>
+    </div>
+    <div class="dlg-f"><button type="button" id="n-cancel">Close</button><button class="primary" type="submit" id="n-save">Save booking</button></div>
+  </form>
+</dialog>
+
+<div id="sheet"></div>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script>
 (function(){
   var API="https://frxzhjmvoqyjzgdcupkg.supabase.co";
   var ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyeHpoam12b3F5anpnZGN1cGtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMDY5NTYsImV4cCI6MjEwNjU4Mjk1Nn0.J7eB9te8Jk1wATPw9ARjOnRMW5cZCPFnrLJE7Oterkk";
+  var TZ="America/Chicago", OPEN=540, CLOSE=1020, ROW=44;   // ROW = pixels per 30 minutes
   var $=function(id){return document.getElementById(id)};
-  var token=null;
-  try{token=sessionStorage.getItem("cst-admin")}catch(e){}
+  var pad=function(n){return (n<10?"0":"")+n};
+  var sess=null, appts=[], blocks=[], view="day", day="", timer=null, loaded=false;
+  try{sess=JSON.parse(sessionStorage.getItem("cst-admin"))}catch(e){}
 
-  function h(extra){var o={apikey:ANON,Authorization:"Bearer "+(token||ANON),"Content-Type":"application/json"};for(var k in extra)o[k]=extra[k];return o}
   function el(tag,text,cls){var n=document.createElement(tag);if(text!=null)n.textContent=text;if(cls)n.className=cls;return n}
-  var tz={timeZone:"America/Chicago"};
-  var fDay=function(iso){return new Date(iso).toLocaleDateString("en-US",Object.assign({weekday:"long",month:"long",day:"numeric"},tz))};
-  var fTime=function(iso){return new Date(iso).toLocaleTimeString("en-US",Object.assign({hour:"numeric",minute:"2-digit"},tz))};
+  function toast(t){var x=$("toast");x.textContent=t;x.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){x.hidden=true},4200)}
 
-  function show(){
-    var on=!!token;$("login").hidden=on;$("app").hidden=!on;
-    if(on)refresh();
+  // ---------- shop clock (Dallas) ----------
+  function parts(iso){var p={};new Intl.DateTimeFormat("en-US",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date(iso)).forEach(function(x){p[x.type]=x.value});return p}
+  function dayKey(iso){var p=parts(iso);return p.year+"-"+p.month+"-"+p.day}
+  function mins(iso){var p=parts(iso);return (+p.hour%24)*60+ +p.minute}
+  function lbl(m){var h=Math.floor(m/60),n=m%60;return (h>12?h-12:h===0?12:h)+":"+pad(n)+" "+(h>=12?"PM":"AM")}
+  function longDay(k){return new Date(k+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",timeZone:"UTC"})}
+  function shortDay(k){return new Date(k+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric",timeZone:"UTC"})}
+  function shiftDay(k,n){var d=new Date(k+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+  function dow(k){return new Date(k+"T12:00:00Z").getUTCDay()}
+  function todayKey(){return dayKey(new Date().toISOString())}
+  function nextWeekday(k){while(dow(k)===0||dow(k)===6)k=shiftDay(k,1);return k}
+  function mondayOf(k){var d=dow(k);return shiftDay(k,d===0?-6:1-d)}
+  var digits=function(s){return String(s||"").replace(/\D/g,"")};
+
+  // ---------- auth (password sign-in, silent token refresh) ----------
+  function save(s){sess=s;try{if(s)sessionStorage.setItem("cst-admin",JSON.stringify(s));else sessionStorage.removeItem("cst-admin")}catch(e){}}
+  function tokenCall(body,grant){
+    return fetch(API+"/auth/v1/token?grant_type="+grant,{method:"POST",headers:{apikey:ANON,"Content-Type":"application/json"},body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})});
   }
-  function logout(msg){token=null;try{sessionStorage.removeItem("cst-admin")}catch(e){}show();$("lmsg").textContent=msg||""}
-
-  function api(path,opt){
-    return fetch(API+path,Object.assign({headers:h()},opt)).then(function(r){
-      if(r.status===401){logout("Your session expired. Please sign in again.");throw new Error("auth")}
-      return r;
+  function store(j,email){save({a:j.access_token,r:j.refresh_token,e:Date.now()+(j.expires_in||3600)*1000,email:email||(j.user&&j.user.email)||(sess&&sess.email)||""})}
+  function ensureToken(){
+    if(!sess)return Promise.reject(new Error("auth"));
+    if(Date.now()<sess.e-60000)return Promise.resolve();
+    return tokenCall({refresh_token:sess.r},"refresh_token").then(function(o){
+      if(!o.ok){logout("Your session expired. Please sign in again.");throw new Error("auth")}
+      store(o.j);
     });
   }
+  function api(path,opt){
+    return ensureToken().then(function(){
+      var h={apikey:ANON,Authorization:"Bearer "+sess.a,"Content-Type":"application/json"};
+      return fetch(API+path,Object.assign({headers:h},opt)).then(function(r){
+        if(r.status===401){logout("Your session expired. Please sign in again.");throw new Error("auth")}
+        return r;
+      });
+    });
+  }
+  function logout(msg){save(null);clearInterval(timer);loaded=false;show();$("lmsg").textContent=msg||""}
+  function show(){var on=!!sess;$("login").hidden=on;$("app").hidden=!on;if(on){$("who").textContent=sess.email||"";boot()}}
 
   $("go").addEventListener("click",function(){
-    $("lmsg").textContent="";
-    fetch(API+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:ANON,"Content-Type":"application/json"},
-      body:JSON.stringify({email:$("em").value.trim(),password:$("pw").value})})
-    .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
-    .then(function(o){
+    $("lmsg").textContent="";var email=$("em").value.trim();
+    tokenCall({email:email,password:$("pw").value},"password").then(function(o){
       if(!o.ok){$("lmsg").textContent="Wrong email or password.";return}
-      token=o.j.access_token;try{sessionStorage.setItem("cst-admin",token)}catch(e){}
-      $("pw").value="";show();
+      store(o.j,email);$("pw").value="";show();
     }).catch(function(){$("lmsg").textContent="Could not reach the server."});
   });
   $("pw").addEventListener("keydown",function(e){if(e.key==="Enter")$("go").click()});
   $("out").addEventListener("click",function(){logout()});
 
-  function refresh(){
-    var nowIso=new Date().toISOString();
-    api("/rest/v1/appointments?status=eq.confirmed&end_at=gte."+encodeURIComponent(nowIso)+"&order=start_at.asc").then(function(r){return r.json()}).then(function(rows){
-      var box=$("appts");box.textContent="";
-      if(!Array.isArray(rows)){box.appendChild(el("p","You do not have access to this schedule. Ask the site owner to add your email.","empty"));return}
-      if(!rows.length){box.appendChild(el("p","No upcoming appointments.","empty"));return}
-      var last="",ul=null;
-      rows.forEach(function(a){
-        var d=fDay(a.start_at);
-        if(d!==last){last=d;box.appendChild(el("div",d,"day"));ul=el("ul");box.appendChild(ul)}
-        var li=el("li"),left=el("div");
-        left.appendChild(el("span",fTime(a.start_at)+" to "+fTime(a.end_at)+" · "+a.service,"when"));
-        left.appendChild(el("small",a.vehicle_year+" "+a.vehicle_make+" "+a.vehicle_model+" · "+a.customer_name+" · Ref "+a.ref));
-        var contact=el("small");var tel=el("a",a.phone);tel.href="tel:"+a.phone.replace(/[^\d+]/g,"");contact.appendChild(tel);
-        if(a.email){contact.appendChild(document.createTextNode(" · "+a.email))}
-        left.appendChild(contact);
-        if(a.notes)left.appendChild(el("small","Notes: "+a.notes));
-        var b=el("button","Cancel","danger");b.dataset.id=a.id;
-        li.appendChild(left);li.appendChild(b);ul.appendChild(li);
-      });
-    }).catch(function(){});
-    api("/rest/v1/blocks?end_at=gte."+encodeURIComponent(nowIso)+"&order=start_at.asc").then(function(r){return r.json()}).then(function(rows){
-      var box=$("blocks");box.textContent="";
-      if(!Array.isArray(rows)||!rows.length)return;
-      var ul=el("ul");
-      rows.forEach(function(x){
-        var li=el("li"),left=el("div");
-        left.appendChild(el("span",fDay(x.start_at)+", "+fTime(x.start_at)+" to "+fTime(x.end_at),"when"));
-        left.appendChild(el("small","Blocked"+(x.reason?" · "+x.reason:"")));
-        var b=el("button","Remove block");b.dataset.block=x.id;
-        li.appendChild(left);li.appendChild(b);ul.appendChild(li);
-      });
-      box.appendChild(ul);
-    }).catch(function(){});
+  // ---------- data ----------
+  function load(){
+    var from=new Date(Date.now()-60*864e5).toISOString();
+    return Promise.all([
+      api("/rest/v1/appointments?end_at=gte."+encodeURIComponent(from)+"&order=start_at.asc&limit=1000").then(function(r){return r.json()}),
+      api("/rest/v1/blocks?end_at=gte."+encodeURIComponent(from)+"&order=start_at.asc&limit=500").then(function(r){return r.json()})
+    ]).then(function(res){
+      loaded=true;$("banner").hidden=true;
+      if(!Array.isArray(res[0])){appts=[];blocks=[];$("banner").textContent="You do not have access to this schedule. Ask the site owner to add your email.";$("banner").hidden=false;stats();render();return}
+      appts=res[0];blocks=Array.isArray(res[1])?res[1]:[];stats();render();
+    }).catch(function(e){if(e&&e.message==="auth")return;$("banner").textContent="Could not load the schedule. Check your connection; this page retries every minute.";$("banner").hidden=false});
+  }
+  function boot(){
+    if(!day)day=nextWeekday(todayKey());
+    $("d-pick").value=day;if(!$("bd").value)$("bd").value=day;
+    load();clearInterval(timer);timer=setInterval(function(){if(!document.hidden&&!$("dlg-new").open)load()},60000);
+  }
+  document.addEventListener("visibilitychange",function(){if(!document.hidden&&sess)load()});
+
+  function liveOn(k){return appts.filter(function(a){return a.status==="confirmed"&&dayKey(a.start_at)===k})}
+  function blocksOn(k){return blocks.filter(function(b){return dayKey(b.start_at)<=k&&dayKey(b.end_at)>=k})}
+  function span(b,k){return {s:dayKey(b.start_at)<k?0:mins(b.start_at),e:dayKey(b.end_at)>k?1440:mins(b.end_at)}}
+
+  function stats(){
+    var box=$("stats");box.textContent="";var t=todayKey(),now=new Date().toISOString(),wk=shiftDay(t,7);
+    var live=appts.filter(function(a){return a.status==="confirmed"});
+    var today=live.filter(function(a){return dayKey(a.start_at)===t});
+    var next=live.filter(function(a){return a.start_at>=now})[0];
+    var week=live.filter(function(a){var k=dayKey(a.start_at);return k>=t&&k<wk});
+    var online=week.filter(function(a){return a.source==="online"||!a.source}).length;
+    function s(big,small){var d=el("div",null,"stat");d.appendChild(el("b",big));d.appendChild(el("span",small));box.appendChild(d)}
+    s(String(today.length),"Appointments today");
+    s(String(week.length),"Next 7 days"+(week.length?" · "+online+" booked online":""));
+    s(next?lbl(mins(next.start_at)):"None",next?"Next: "+(dayKey(next.start_at)===t?"today":shortDay(dayKey(next.start_at)))+" · "+next.service:"Nothing coming up");
+    s(String(blocks.filter(function(b){return b.end_at>=now}).length),"Blocked periods ahead");
+    var h=new Date().getHours();
+    $("hi").textContent=(h<12?"Good morning":h<17?"Good afternoon":"Good evening");
+    $("sub").textContent=longDay(t)+(today.length?" · "+today.length+" on the schedule today":" · nothing booked today");
   }
 
-  $("appts").addEventListener("click",function(e){
-    var id=e.target.dataset&&e.target.dataset.id;if(!id)return;
-    if(!confirm("Cancel this appointment? The time opens up again. The customer is not notified, so call them."))return;
-    api("/rest/v1/appointments?id=eq."+encodeURIComponent(id),{method:"PATCH",body:JSON.stringify({status:"cancelled"})}).then(refresh).catch(function(){});
+  // ---------- shared pieces ----------
+  function match(a,q){
+    if(!q)return true;q=q.toLowerCase();var d=digits(q);
+    return [a.customer_name,a.vehicle_make,a.vehicle_model,a.ref,a.service,a.email||"",String(a.vehicle_year)].join(" ").toLowerCase().indexOf(q)>-1||(d.length>=3&&digits(a.phone).indexOf(d)>-1);
+  }
+  function tagsFor(a,h){
+    if(a.service==="Oil change")h.appendChild(el("span","30 min","tag"));
+    if(a.source&&a.source!=="online")h.appendChild(el("span",a.source==="phone"?"Phone":"Walk-in","tag ph"));
+    if(a.status==="cancelled")h.appendChild(el("span","Cancelled","tag x"));
+  }
+  function find(id){return appts.filter(function(a){return a.id===id})[0]}
+
+  // ---------- day view: time grid ----------
+  function renderDay(box){
+    var rows=(CLOSE-OPEN)/30, H=rows*ROW, q=$("q").value.trim(), showX=$("show-x").checked, t=todayKey();
+    var title=el("h2",null,"daytitle");title.appendChild(document.createTextNode(longDay(day)+(day===t?" · today":"")));
+    var live=liveOn(day);title.appendChild(el("small",live.length+(live.length===1?" appointment":" appointments")+" · tap an open time to add a booking"));
+    box.appendChild(title);
+    if(dow(day)===0||dow(day)===6){box.appendChild(el("p","The shop is closed on weekends.","empty"));return}
+
+    var tl=el("div",null,"tl"),ruler=el("div",null,"tl-ruler"),body=el("div",null,"tl-body");
+    ruler.style.height=body.style.height=H+"px";
+    for(var i=0;i<=rows;i++){
+      var m=OPEN+i*30,y=i*ROW;
+      if(i%2===0){var sp=el("span",lbl(m));sp.style.top=y+"px";if(i===0)sp.style.transform="translateY(4px)";if(i===rows)sp.style.transform="translateY(-100%)";ruler.appendChild(sp)}
+      if(i>0&&i<rows){var ln=el("div",null,"tl-line"+(i%2?" half":""));ln.style.top=y+"px";body.appendChild(ln)}
+    }
+    var busy=[];
+    function place(s,e,node){var top=Math.max(0,(s-OPEN)/30*ROW),bot=Math.min(H,(e-OPEN)/30*ROW);if(bot<=top)return;node.style.top=(top+1)+"px";node.style.height=(bot-top-2)+"px";body.appendChild(node)}
+    var items=appts.filter(function(a){return dayKey(a.start_at)===day&&(a.status==="confirmed"||showX)});
+    items.forEach(function(a){if(a.status==="confirmed")busy.push([mins(a.start_at),mins(a.end_at)])});
+    blocksOn(day).forEach(function(b){var sp=span(b,day);busy.push([sp.s,sp.e])});
+    // open slots (clickable) go underneath everything
+    for(var s2=OPEN;s2<CLOSE;s2+=30){
+      if(busy.some(function(b){return b[0]<s2+30&&b[1]>s2}))continue;
+      (function(sm){var b=el("button","+ "+lbl(sm),"tl-slot");b.dataset.slot=sm;b.setAttribute("aria-label","Add a booking at "+lbl(sm));b.style.top=((sm-OPEN)/30*ROW)+"px";b.style.height=ROW+"px";body.appendChild(b)})(s2);
+    }
+    blocksOn(day).forEach(function(b){
+      var sp=span(b,day),n=el("div",null,"tl-item block");n.appendChild(el("b","Blocked"+(b.reason?" · "+b.reason:"")));
+      n.appendChild(el("span",lbl(Math.max(sp.s,OPEN))+" to "+lbl(Math.min(sp.e,CLOSE))));
+      var x=el("button","Remove","small x");x.dataset.block=b.id;n.appendChild(x);place(sp.s,sp.e,n);
+    });
+    items.forEach(function(a){
+      if(!match(a,q)&&q){return}
+      var s=mins(a.start_at),e=mins(a.end_at),short=e-s<=30;
+      var n=el("button",null,"tl-item"+(a.service==="Oil change"?" oil":"")+(a.status==="cancelled"?" cancelled":"")+(short?" short":""));n.dataset.view=a.id;
+      var h=el("b",null);h.appendChild(document.createTextNode(a.customer_name));
+      if(a.source&&a.source!=="online")h.appendChild(el("span",a.source==="phone"?"Phone":"Walk-in","tag ph"));
+      if(a.status==="cancelled")h.appendChild(el("span","Cancelled","tag x"));
+      n.appendChild(h);
+      n.appendChild(el("span",(short?"":lbl(s)+" to "+lbl(e)+" · ")+a.service+" · "+a.vehicle_year+" "+a.vehicle_make+" "+a.vehicle_model));
+      place(s,e,n);
+    });
+    if(day===t){var nm=mins(new Date().toISOString());if(nm>=OPEN&&nm<=CLOSE){var nl=el("div",null,"tl-now");nl.style.top=((nm-OPEN)/30*ROW)+"px";body.appendChild(nl)}}
+    tl.appendChild(ruler);tl.appendChild(body);box.appendChild(tl);
+    if(!live.length&&!blocksOn(day).length)box.appendChild(el("p","Nothing booked yet. Click any open time to add the first booking.","empty")).style.marginTop="10px";
+  }
+
+  // ---------- week view ----------
+  function renderWeek(box){
+    var mon=mondayOf(day),t=todayKey(),q=$("q").value.trim(),showX=$("show-x").checked;
+    var title=el("h2",null,"daytitle");title.appendChild(document.createTextNode("Week of "+shortDay(mon)));box.appendChild(title);
+    var grid=el("div",null,"week");
+    for(var i=0;i<5;i++){
+      var k=shiftDay(mon,i),col=el("div",null,"wd"+(k===t?" today":""));
+      var live=liveOn(k),used=0;live.forEach(function(a){used+=mins(a.end_at)-mins(a.start_at)});
+      blocksOn(k).forEach(function(b){var sp=span(b,k);used+=Math.max(0,Math.min(sp.e,CLOSE)-Math.max(sp.s,OPEN))});
+      var h=el("button",null,"wd-h");h.dataset.goday=k;h.appendChild(el("b",shortDay(k)));
+      h.appendChild(el("span",live.length+(live.length===1?" appointment":" appointments")+" · "+Math.round(Math.min(1,used/(CLOSE-OPEN))*100)+"% booked"));
+      var mt=el("div",null,"meter"),fill=el("i");fill.style.width=Math.min(100,used/(CLOSE-OPEN)*100)+"%";mt.appendChild(fill);h.appendChild(mt);col.appendChild(h);
+      var b=el("div",null,"wd-b"),n=0,list=[];
+      appts.filter(function(a){return dayKey(a.start_at)===k&&(a.status==="confirmed"||showX)&&match(a,q)}).forEach(function(a){list.push({s:mins(a.start_at),a:a})});
+      if(!q)blocksOn(k).forEach(function(bk){list.push({s:span(bk,k).s,b:bk})});
+      list.sort(function(x,y){return x.s-y.s}).forEach(function(it){
+        n++;
+        if(it.a){var c=el("button",null,"chip"+(it.a.service==="Oil change"?" oil":"")+(it.a.status==="cancelled"?" cancelled":""));c.dataset.view=it.a.id;
+          c.appendChild(el("b",lbl(it.s)+" · "+it.a.customer_name));c.appendChild(el("span",it.a.service+" · "+it.a.vehicle_make+" "+it.a.vehicle_model));b.appendChild(c)}
+        else{var c2=el("div",null,"chip block");c2.appendChild(el("b","Blocked"));c2.appendChild(el("span",it.b.reason||lbl(Math.max(span(it.b,k).s,OPEN))+" to "+lbl(Math.min(span(it.b,k).e,CLOSE))));b.appendChild(c2)}
+      });
+      if(!n)b.appendChild(el("div",q?"No matches":"Open all day","none"));
+      col.appendChild(b);grid.appendChild(col);
+    }
+    box.appendChild(grid);
+  }
+
+  // ---------- list views ----------
+  function renderList(box){
+    var q=$("q").value.trim(),showX=$("show-x").checked,now=new Date().toISOString();
+    var rows=appts.filter(function(a){return (showX||a.status==="confirmed")&&match(a,q)});
+    rows=view==="up"?rows.filter(function(a){return a.end_at>=now}):rows.filter(function(a){return a.end_at<now}).reverse();
+    if(!rows.length){box.appendChild(el("p",view==="up"?"No upcoming appointments.":"No past appointments in the last 60 days.","empty"));return}
+    var last="",ul=null;
+    rows.forEach(function(a){
+      var k=dayKey(a.start_at);if(k!==last){last=k;box.appendChild(el("div",longDay(k),"day"));ul=el("div",null,"list");box.appendChild(ul)}
+      var c=el("button",null,"item"+(a.service==="Oil change"?" oil":"")+(a.status==="cancelled"?" cancelled":""));c.dataset.view=a.id;
+      var t=el("div",null,"t");t.appendChild(document.createTextNode(lbl(mins(a.start_at))));t.appendChild(el("small","to "+lbl(mins(a.end_at))));
+      var m=el("div",null,"main"),h=el("b",a.customer_name);tagsFor(a,h);m.appendChild(h);
+      m.appendChild(el("small",a.service+" · "+a.vehicle_year+" "+a.vehicle_make+" "+a.vehicle_model));
+      m.appendChild(el("small",a.phone));
+      c.appendChild(t);c.appendChild(m);c.appendChild(el("span","View ›"));ul.appendChild(c);
+    });
+  }
+
+  function render(){
+    var box=$("list");box.textContent="";
+    $("datebar").hidden=!(view==="day"||view==="week");
+    $("print").hidden=view!=="day";
+    if(!loaded){box.appendChild(el("p","Loading…","empty"));return}
+    if(view==="day")renderDay(box);else if(view==="week")renderWeek(box);else renderList(box);
+  }
+  function setView(v){view=v;["day","week","up","past"].forEach(function(x){$("v-"+x).setAttribute("aria-pressed",String(x===v))});render()}
+  ["day","week","up","past"].forEach(function(v){$("v-"+v).addEventListener("click",function(){setView(v)})});
+  function setDay(k){day=k;$("d-pick").value=k;$("bd").value=k;render()}
+  function step(n){var span=view==="week"?7*n:n,k=shiftDay(day,span);if(view==="day"){while(dow(k)===0||dow(k)===6)k=shiftDay(k,n)}setDay(k)}
+  $("d-prev").addEventListener("click",function(){step(-1)});
+  $("d-next").addEventListener("click",function(){step(1)});
+  $("d-today").addEventListener("click",function(){setDay(nextWeekday(todayKey()))});
+  $("d-pick").addEventListener("change",function(){if(this.value)setDay(this.value)});
+  $("q").addEventListener("input",render);
+  $("show-x").addEventListener("change",render);
+
+  // ---------- clicks on the board ----------
+  $("list").addEventListener("click",function(e){
+    var t=e.target.closest("[data-view],[data-slot],[data-block],[data-goday]");if(!t)return;var d=t.dataset;
+    if(d.block){
+      if(!confirm("Remove this block? The time opens on the public booking page again."))return;
+      api("/rest/v1/blocks?id=eq."+encodeURIComponent(d.block),{method:"DELETE"}).then(function(){toast("Block removed.");load()}).catch(function(){});
+    }else if(d.slot){openNew(day,+d.slot)}
+    else if(d.goday){view="day";["day","week","up","past"].forEach(function(x){$("v-"+x).setAttribute("aria-pressed",String(x==="day"))});setDay(d.goday)}
+    else if(d.view){openView(d.view)}
   });
-  $("blocks").addEventListener("click",function(e){
-    var id=e.target.dataset&&e.target.dataset.block;if(!id)return;
-    api("/rest/v1/blocks?id=eq."+encodeURIComponent(id),{method:"DELETE"}).then(refresh).catch(function(){});
+
+  // ---------- booking detail ----------
+  var cur=null;
+  function openView(id){
+    var a=find(id);if(!a)return;cur=a;
+    $("v-name").textContent=a.customer_name;
+    var tg=$("v-tags");tg.textContent="";tg.appendChild(el("span",a.status==="cancelled"?"Cancelled":"Confirmed","tag"+(a.status==="cancelled"?" x":"")));
+    var src=a.source==="phone"?"Phone call":a.source==="walk-in"?"Walk-in":"Booked online";tg.appendChild(el("span",src,"tag ph"));
+    var kv=$("v-kv");kv.textContent="";
+    function row(k,v,node){kv.appendChild(el("dt",k));var dd=el("dd");if(node)dd.appendChild(node);else dd.textContent=v;kv.appendChild(dd)}
+    row("When",longDay(dayKey(a.start_at))+", "+lbl(mins(a.start_at))+" to "+lbl(mins(a.end_at)));
+    row("Service",a.service+(a.service==="Oil change"?" (30 min)":" (1 hour)"));
+    row("Vehicle",a.vehicle_year+" "+a.vehicle_make+" "+a.vehicle_model);
+    var tel=el("a",a.phone);tel.href="tel:"+a.phone.replace(/[^\d+]/g,"");row("Phone",null,tel);
+    if(a.email){var ml=el("a",a.email);ml.href="mailto:"+a.email;row("Email",null,ml)}
+    if(a.notes)row("Notes",a.notes);
+    row("Reference",a.ref);
+    row("Booked",new Date(a.created_at).toLocaleString("en-US",{timeZone:TZ,month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}));
+    var hist=appts.filter(function(x){return x.id!==a.id&&digits(x.phone)===digits(a.phone)&&x.status==="confirmed"}),hb=$("v-hist");hb.textContent="";
+    if(hist.length){hb.hidden=false;hb.appendChild(el("b","Returning customer · "+hist.length+" other "+(hist.length===1?"visit":"visits")));
+      hist.slice(-5).reverse().forEach(function(x){hb.appendChild(el("div",shortDay(dayKey(x.start_at))+" · "+x.service+" · "+x.vehicle_year+" "+x.vehicle_make+" "+x.vehicle_model))})}
+    else hb.hidden=true;
+    var acts=$("v-acts");acts.textContent="";
+    var call=el("a","Call","btnlink");call.href=tel.href;acts.appendChild(call);
+    var sms=el("a","Text","btnlink");sms.href="sms:"+a.phone.replace(/[^\d+]/g,"");acts.appendChild(sms);
+    var cp=el("button","Copy details");cp.dataset.act="copy";acts.appendChild(cp);
+    if(a.status==="confirmed"){var c=el("button","Cancel booking","danger");c.dataset.act="cancel";acts.appendChild(c)}
+    else{var r=el("button","Restore booking");r.dataset.act="restore";acts.appendChild(r)}
+    $("dlg-view").showModal();
+  }
+  $("v-close").addEventListener("click",function(){$("dlg-view").close()});
+  $("v-acts").addEventListener("click",function(e){
+    var act=e.target.dataset&&e.target.dataset.act;if(!act||!cur)return;var a=cur;
+    if(act==="copy"){
+      var txt=["Appointment "+a.ref,longDay(dayKey(a.start_at))+" at "+lbl(mins(a.start_at)),a.service,a.vehicle_year+" "+a.vehicle_make+" "+a.vehicle_model,a.customer_name+" "+a.phone].join("\n");
+      (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){toast("Details copied.")},function(){toast("Could not copy.")});
+    }else if(act==="cancel"){
+      if(!confirm("Cancel "+a.customer_name+"'s appointment at "+lbl(mins(a.start_at))+"?\n\nThe time opens up again. The customer is NOT notified, so call them: "+a.phone))return;
+      api("/rest/v1/appointments?id=eq."+encodeURIComponent(a.id),{method:"PATCH",body:JSON.stringify({status:"cancelled"})}).then(function(){$("dlg-view").close();toast("Cancelled. Call "+a.customer_name+" to let them know.");load()}).catch(function(){});
+    }else if(act==="restore"){
+      api("/rest/v1/appointments?id=eq."+encodeURIComponent(a.id),{method:"PATCH",body:JSON.stringify({status:"confirmed"})}).then(function(r){
+        if(r.status===409)toast("Cannot restore: that time has been taken since.");else{$("dlg-view").close();toast("Booking restored.");load()}
+      }).catch(function(){});
+    }
   });
+
+  // ---------- new booking (phone / walk-in) ----------
+  function freeTimes(k,service){
+    var dur=service==="Oil change"?30:60,busy=[];
+    liveOn(k).forEach(function(a){busy.push([mins(a.start_at),mins(a.end_at)])});
+    blocksOn(k).forEach(function(b){var sp=span(b,k);busy.push([sp.s,sp.e])});
+    var out=[];for(var m=OPEN;m+dur<=CLOSE;m+=30){if(!busy.some(function(b){return b[0]<m+dur&&b[1]>m}))out.push(m)}return out;
+  }
+  function fillTimes(want){
+    var sel=$("n-time");sel.textContent="";var k=$("n-date").value;
+    if(!k||dow(k)===0||dow(k)===6){sel.appendChild(new Option(k?"Closed on weekends":"Pick a day",""));return}
+    var f=freeTimes(k,$("n-service").value);
+    if(!f.length){sel.appendChild(new Option("No time free that day",""));return}
+    f.forEach(function(m){sel.appendChild(new Option(lbl(m),String(m)))});
+    if(want!=null&&f.indexOf(want)>-1)sel.value=String(want);
+  }
+  function openNew(k,m){
+    $("n-form").reset();$("n-msg").textContent="";
+    $("n-date").value=k||day;if(m!=null&&$("n-service").value==="Oil change"){}
+    fillTimes(m);$("dlg-new").showModal();$("n-name").focus();
+  }
+  $("new").addEventListener("click",function(){openNew(day,null)});
+  $("n-date").addEventListener("change",function(){fillTimes()});
+  $("n-service").addEventListener("change",function(){var prev=+$("n-time").value;fillTimes(prev||null)});
+  $("n-close").addEventListener("click",function(){$("dlg-new").close()});
+  $("n-cancel").addEventListener("click",function(){$("dlg-new").close()});
+  $("n-form").addEventListener("submit",function(e){
+    e.preventDefault();var m=$("n-msg");m.textContent="";
+    var v=function(id){return $(id).value.trim()},tm=$("n-time").value;
+    if(!tm){m.textContent="Pick a day and a free time.";return}
+    if(v("n-name").length<2){m.textContent="Enter the customer's name.";return}
+    if(digits(v("n-phone")).length<10){m.textContent="Enter a 10-digit phone number.";return}
+    if(v("n-email")&&!/^\S+@\S+\.\S+$/.test(v("n-email"))){m.textContent="Check the email address or leave it blank.";return}
+    var yr=+v("n-year");if(!(yr>=1950&&yr<=new Date().getFullYear()+1)){m.textContent="Enter the vehicle year.";return}
+    if(!v("n-make")||!v("n-model")){m.textContent="Enter the vehicle make and model.";return}
+    var b=$("n-save");b.disabled=true;b.textContent="Saving…";
+    api("/rest/v1/rpc/admin_book",{method:"POST",body:JSON.stringify({p_service:v("n-service"),p_date:v("n-date"),p_time:pad(Math.floor(tm/60))+":"+pad(tm%60),p_name:v("n-name"),p_phone:v("n-phone"),p_email:v("n-email"),p_year:yr,p_make:v("n-make"),p_model:v("n-model"),p_notes:v("n-notes"),p_source:v("n-source")})})
+    .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,j:j}})})
+    .then(function(o){
+      b.disabled=false;b.textContent="Save booking";
+      if(o.ok){$("dlg-new").close();toast("Booked for "+shortDay(v("n-date"))+" at "+lbl(+tm)+".");view="day";["day","week","up","past"].forEach(function(x){$("v-"+x).setAttribute("aria-pressed",String(x==="day"))});setDay(v("n-date"));load();return}
+      var msg=String(o.j&&o.j.message||"");
+      m.textContent=msg==="slot_taken"?"That time was just taken. Pick another.":msg==="invalid_date"?"Pick a weekday within the next 4 months.":"Could not save. Check the details and try again.";
+      if(msg==="slot_taken")load().then(function(){fillTimes()});
+    }).catch(function(){b.disabled=false;b.textContent="Save booking"});
+  });
+
+  // ---------- block time ----------
+  var PRE={day:["00:00","23:59"],am:["09:00","12:00"],pm:["12:00","17:00"],lunch:["12:00","13:00"]};
+  document.querySelector(".presets").addEventListener("click",function(e){var p=e.target.dataset&&e.target.dataset.p;if(!p)return;$("bf").value=PRE[p][0];$("bt").value=PRE[p][1]});
   $("addb").addEventListener("click",function(){
     var m=$("bmsg");m.textContent="";
     if(!$("bd").value||!$("bf").value||!$("bt").value){m.textContent="Pick a day and a start and end time.";return}
     api("/rest/v1/rpc/add_block",{method:"POST",body:JSON.stringify({p_date:$("bd").value,p_from:$("bf").value,p_to:$("bt").value,p_reason:$("br").value})})
-    .then(function(r){if(!r.ok)m.textContent="Could not block that time. Check that the end is after the start.";else{$("br").value="";refresh()}}).catch(function(){});
+    .then(function(r){
+      if(!r.ok){m.textContent="Could not block that time. Check that the end is after the start.";return}
+      $("br").value="";toast("Time blocked on the public booking page.");setDay($("bd").value);load();
+    }).catch(function(){});
+  });
+
+  // ---------- print day sheet ----------
+  $("print").addEventListener("click",function(){
+    var s=$("sheet");s.textContent="";s.appendChild(el("h1","CST Automotive · "+longDay(day)));
+    var live=liveOn(day).sort(function(a,b){return a.start_at<b.start_at?-1:1});
+    s.appendChild(el("p",live.length+" appointment"+(live.length===1?"":"s")+" · printed "+new Date().toLocaleString("en-US",{timeZone:TZ})));
+    var t=el("table"),hr=el("tr");["Time","Service","Customer","Phone","Vehicle","Notes"].forEach(function(h){hr.appendChild(el("th",h))});t.appendChild(hr);
+    live.forEach(function(a){var r=el("tr");[lbl(mins(a.start_at))+" – "+lbl(mins(a.end_at)),a.service,a.customer_name,a.phone,a.vehicle_year+" "+a.vehicle_make+" "+a.vehicle_model,a.notes||""].forEach(function(c){r.appendChild(el("td",c))});t.appendChild(r)});
+    if(!live.length){var r2=el("tr"),c=el("td","No appointments");c.colSpan=6;r2.appendChild(c);t.appendChild(r2)}
+    s.appendChild(t);window.print();
   });
 
   show();

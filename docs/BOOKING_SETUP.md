@@ -5,7 +5,7 @@
 - Oil changes use **30-minute** slots. Every other service uses **1-hour** slots on the hour. Open Mon to Fri, 9 AM to 5 PM Dallas time, up to 60 days ahead.
 - One bay: a booking or block on a moment makes it unavailable to everyone. The database enforces this, so two people can never hold the same time.
 - On booking, the function emails the shop and (if an email was given) the customer, and texts the customer when SMS is configured.
-- `admin.html` is the shop's schedule: sign in, see upcoming appointments, cancel one, and block off time (lunch, closed days, a parts delivery).
+- `admin.html` (open `/admin`) is the shop's schedule board: a day timeline with open times, a week view, upcoming and history lists, search by name/phone/car, a detail panel with the customer's visit history, **+ New booking** for phone calls and walk-ins (closes the time on the public page), cancel/restore, block off time (lunch, days off), and a printable day sheet. It refreshes every minute.
 
 ## Supabase project
 `cst-automotive` (ref `frxzhjmvoqyjzgdcupkg`, us-east-2). Schema is in `supabase/migrations/`, the function in `supabase/functions/book/`.
